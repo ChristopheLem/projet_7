@@ -12,7 +12,7 @@ User.init({
     autoIncrement: true,
     primaryKey: true
   },
-  name: {
+  username: {
     type: Sequelize.STRING,
     allowNull: false
   },
