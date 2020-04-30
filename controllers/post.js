@@ -26,7 +26,8 @@ exports.createPost = async (req, res) => {
     try {
             await Post.create({ 
             content: req.body.content,
-            userId: req.user.id
+            userId: req.user.id,
+            username: req.user.username
              })
             
         res.status(201).send({ message: 'Post has been created'})
@@ -37,10 +38,15 @@ exports.createPost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
     try {
-        await Post.update({
+        const post = await Post.findOne({ where: {
+            id: req.params.id
+        }})
+        if (post && post.userId !== req.user.id) {
+            return res.sendStatus(401);
+        }
+        await post.update({
             ...req.body, id: req.params.id},
-            {where: {id: req.params.id}
-        })
+        )
         res.status(200).send({ message: 'Post has been updated'})
     } catch (err) {
         res.sendStatus(500)    
@@ -59,5 +65,16 @@ exports.deletePost = async (req, res) => {
         res.status(200).send({ message: "Post has been deleted ! "})
     } catch (err) {
         res.status(500).send(err)
+    }
+}
+
+exports.getAllUserPosts = async (req, res) => {
+    try {
+        const posts = await Post.findAll({ where: {
+            userId: req.user.id
+        }})
+        res.status(200).send(posts)
+    } catch (err) {
+        res.sendStatus(500)
     }
 }

@@ -6,6 +6,7 @@ const postController = require('../controllers/post')
 
 router.get('/posts', auth, postController.getAllPosts)
 router.get('/post/:id', auth, postController.getOnePost)
+router.get('/posts/me', auth, postController.getAllUserPosts)
 router.post('/post', auth, postController.createPost)
 router.put('/post/:id', auth, postController.updatePost)
 router.delete('/post/:id', auth, postController.deletePost)

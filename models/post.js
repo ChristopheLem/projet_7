@@ -10,6 +10,10 @@ Post.init({
     autoIncrement: true,
     primaryKey: true
   },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   content: {
     type: Sequelize.TEXT,
     allowNull: false

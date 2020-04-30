@@ -1,26 +1,49 @@
+ /* GLOBAL */
 * {
     box-sizing: border-box;
-    color: black;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    color: #1c1e21
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
+body {
+  margin: 0;
+  padding: 0;
 }
-
 a {
     text-decoration: none;
 }
-
-h1 {
-    font-size: 48px;
-    text-align: center;
+h1{
+  padding: 16px;
+}
+/* HEADER */
+header {
+  background-color: #fff;
+  padding: 20px;
+  color: #261624;
+  box-shadow: 3px 5px 5px #616161;
 }
 
-/* Bordered form */
-form {
+header img{
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 260px;
+    background-color: #fff;
+}
+
+header nav {
+  display: flex;
+  justify-content: flex-end;
+  background-color: inherit;
+}
+
+header a{
+  background-color: #fff;
+}
+
+/* FORM
+/* form {
     margin-top: 100px;
-  }
+  } */
   
   /* Full-width inputs */
   input[type=text], input[type=password], input[type=email] {
@@ -33,47 +56,44 @@ form {
   }
   
   /* Set a style for all buttons */
+  div.btn {
+    display: flex;
+    justify-content: center;
+       
+  }
   button {
-    background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    width: 100%;
+    width: 50%;
   }
   
-  /* Add a hover effect for buttons */
   button:hover {
     opacity: 0.8;
   }
   
-  /* Extra style for the cancel button (red) */
+  .validbtn {
+     background-color: #4CAF50;  
+     margin-right: 8px; 
+  }
   .cancelbtn {
-    width: auto;
-    padding: 10px 18px;
     background-color: #f44336;
+    margin-left: 8px; 
   }
-  
-  /* Center the avatar image inside this container */
-  .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-  }
-  
-  /* Avatar image */
-  img.avatar {
-    width: 40%;
-    border-radius: 50%;
-  }
-  
-  /* Add padding to containers */
+
   .container {
     padding: 16px;
   }
-  
-  /* The "Forgot password" text */
-  span.psw {
-    float: right;
-    padding-top: 16px;
+
+
+@media all and (min-width: 768px) {
+    header img{
+      display: block;
+      margin: 0 auto 20px auto;
+      width: auto;
+      background-color: #fff;
   }
+}
