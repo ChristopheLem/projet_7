@@ -26,14 +26,52 @@ exports.login = async (req, res) => {
             return res.status(404).send({ error: "Can not find user with this email address !"})
         }
         const isMatch = await bcrypt.compare(req.body.password, user.password)
-        console.log(isMatch)
         if (!isMatch) {
             return res.status(401).send({ error: "Wrong password"})
         }
-        const token = jwt.sign({ userId: user.id}, 'SECRET_KEY', { expiresIn: '24h' })
-        console.log(token)
-        res.status(200).send({ message: "You are connected", token })
+
+        const token = jwt.sign({ id: user.id}, 'SECRET_KEY', { expiresIn: '24h' })
+        res.status(200).send({ userId: user.id, token })
     } catch (err) {
         res.status(500).send(err)
     }
 }
+
+exports.getProfile = async (req, res) => {
+    try {
+        const user = await User.findOne({ where: {
+            id: req.user.id
+        }})
+        res.status(200).send(user)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+}
+
+exports.updateProfile = async (req, res) => {
+    try {
+        await User.update({ 
+            ...req.body
+        }, {
+            where: {
+                id: req.user.id
+            }
+        })
+        res.status(200).send({ message: 'Profile has been updated !'})
+    } catch (err) {
+        res.status(500).send(err)
+    }
+}
+
+
+exports.deleteProfile = async (req, res) => {
+    try {
+        await User.destroy({ where: {
+            id: req.user.id
+        }})
+        res.status(200).send({ message: 'deleted!'})
+    } catch (err) {
+        res.status(500).send(err)
+    }
+}
+

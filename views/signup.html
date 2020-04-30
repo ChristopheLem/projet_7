@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inscription</title>
+        <meta name="description" content="Création de compte pour Groupomédia">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <a id='logo' href='index.html'> <img src="logos/icon-left-font-monochrome-black.svg" alt="logo Groupomania" /></a>
+            <nav>
+                <a href="login.html">Connexion |</a>
+                <a href="signup.html">| Inscription</a>
+            </nav>
+        </header>
+        <main>
+            <h1>Créer un nouveau compte</h1>
+            <form action="action_page.php" method="post">       
+                <div class="container">
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Entrez votre pseudonyme" name="username" id="username" required>
+
+                <label for="email"><b>Email</b></label>
+                <input type="email" placeholder="Entrez votre adresse email" name="email" id="email" required>
+            
+                <label for="psw"><b>Mot de Passe</b></label>
+                <input type="password" placeholder="Entrez votre mot de passe" name="psw" id="psw" required>
+            
+                <button type="submit">Inscription</button>
+                </div>
+            
+                <div class="container">
+                <button type="button" class="cancelbtn">Annuler</button>
+                </div>
+            </form>            
+        </main>
+
+    </body>
+</html>

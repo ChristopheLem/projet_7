@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db')
-const jwt = require('jsonwebtoken')
 
 
 // USER Model
@@ -32,6 +31,6 @@ User.init({
   sequelize
 });
 
-User.sync();
+ User.sync()
 
 module.exports = User
