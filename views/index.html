@@ -7,10 +7,10 @@
     <title> Groupomédia </title>    
     <meta name="description" content="Groupomania, réseau social pour les employés de l'entreprise du même nom.">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e439166e98.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="js/connexion.js" async></script>
     <script src="js/index.js" async></script>
-
-
 </head>
 
 <body>
@@ -22,7 +22,16 @@
             </div> 
         </nav>
     </header>
-
+    <main id="index">
+        <form>
+            <div class="post-form">
+                <textarea id="story" rows="8" placeholder="Racontez nous votre histoire..."></textarea>
+                <button type="submit" class="validbtn" id="btn">Publier</button>                
+            </div>
+            <div id="error-message"></div>
+        </form>
+        <section id="post"></section>
+    </main>
 
 </body>
 

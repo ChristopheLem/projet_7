@@ -5,7 +5,7 @@
     background-color: #f0f2f5;
     color: #1c1e21
 }
-body {
+html, body {
   margin: 0;
   padding: 0;
 }
@@ -14,6 +14,9 @@ a {
 }
 h1{
   padding: 16px;
+}
+a, p, div {
+  background-color: inherit;
 }
 /* HEADER */
 header {
@@ -39,61 +42,143 @@ header nav {
 header a{
   background-color: #fff;
 }
+/* MAIN */
+main {
+  margin: 10px;
+}
+/* FORM */
+input[type=text], input[type=password], input[type=email] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 
-/* FORM
-/* form {
-    margin-top: 100px;
-  } */
-  
-  /* Full-width inputs */
-  input[type=text], input[type=password], input[type=email] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-  
-  /* Set a style for all buttons */
-  div.btn {
-    display: flex;
-    justify-content: center;
-       
-  }
-  button {
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 50%;
-  }
-  
-  button:hover {
-    opacity: 0.8;
-  }
-  
-  .validbtn {
-     background-color: #4CAF50;  
-     margin-right: 8px; 
-  }
-  .cancelbtn {
-    background-color: #f44336;
-    margin-left: 8px; 
-  }
+/* Set a style for all buttons */
+div.btn {
+  display: flex;
+  justify-content: center;
+      
+}
+button {
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50%;
+}
 
-  .container {
-    padding: 16px;
-  }
+button:hover {
+  opacity: 0.8;
+}
 
+.validbtn, .updatebtn {
+    background-color: #4CAF50;  
+    margin-right: 8px; 
+}
+.cancelbtn, .deletebtn {
+  background-color: #f44336;
+  margin-left: 8px; 
+}
+#error-message {
+  color: #f44336;
+  font-size: 24px;
+  text-align: center;
+  padding: 16px 8px;
+}
+.container {
+  padding: 16px;
+}
 
+#my-account .form-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+#my-account label {
+  padding-top: 16px;
+}
+
+#my-account input[type=text],#my-account input[type=password],#my-account input[type=email] {
+  width: 50%;
+}
+/* INDEX */
+#index form {
+display: flex; 
+flex-flow: column nowrap;
+align-items: center;
+}
+#index .post-form {
+width: 300px;
+margin-top: 50px;
+}
+#index textarea {
+resize: none;
+width: 300px;
+border-radius: 5px;
+padding: 8px;
+background-color: #fff;
+font-family: 'Open Sans', sans-serif;
+font-size: 14px;
+}
+#index textarea:focus {
+box-shadow: 3px 5px 5px #616161;
+}
+#index article {
+  width: 300px;
+  margin: 50px auto;
+  border-radius: 5px;
+  padding: 8px;
+  background-color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  border: 1px solid rgb(169, 169, 169);
+}
+
+#index .username {
+  padding: 12px 16px 0;
+  margin: 0 0 12px;
+}
+#index .content {
+  position: relative;
+  min-height: 200px;
+}
+.fa-thumbs-up, .fa-thumbs-down {
+  font-size: 20px;
+}
+.fa-thumbs-up {
+  position: absolute;
+  bottom: 0;
+}
+.fa-thumbs-down {
+  position: absolute;
+  bottom: 0;
+  left: 25px;
+}
+.like {
+  color: green;
+}
+.dislike {
+  color: red;
+}
 @media all and (min-width: 768px) {
     header img{
       display: block;
       margin: 0 auto 20px auto;
       width: auto;
       background-color: #fff;
+  }
+  #index .post-form {
+    width: 500px;
+    }
+  #index textarea {
+    width: 500px;
+  }
+  #index article {
+    width: 500px;
   }
 }

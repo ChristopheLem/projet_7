@@ -7,7 +7,8 @@
     <title> Groupomédia Mon Compte</title>    
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="js/index.js" async></script>
+    <script src="js/connexion.js" async></script>
+    <script src="js/me.js" async></script>
 
 
 </head>
@@ -21,7 +22,34 @@
             </div> 
         </nav>
     </header>
+    <main id="my-account">
+        <h1>Votre compte</h1>
+        <form>       
+            <div class="container">
+                <div class='form-input'>
+                    <label for="username"><b>Username :</b></label>
+                    <input type="text" name="username" id="username" required>
+                </div>
 
+                <div class='form-input'>
+                    <label for="email"><b>Email :</b></label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+
+                <div class='form-input'>
+                    <label for="psw"><b>Mot de passe :</b></label>
+                    <input type="password" name="psw" id="psw" required>
+                </div>
+
+            
+            <div class="btn">
+                <button type="submit" class="updatebtn" id="updatebtn">Modifier</button>
+                <button type="submit" class="deletebtn" id="deletebtn">Supprimer</button>
+            </div>
+
+            </div>
+        </form>
+    </main>
 
 </body>
 

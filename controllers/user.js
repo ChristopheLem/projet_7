@@ -5,12 +5,20 @@ const jwt = require('jsonwebtoken');
 exports.signup = async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 8);
-        const user = await User.create({
+
+         const alreadyExist = await User.findOne({ where : {
+            email: req.body.email
+        }})
+        if ( alreadyExist ) {
+            return res.status(401).send({ error: "Adresse email deja existante !"})
+        }      
+        await User.create({
             username: req.body.username,
             email: req.body.email,
             password: hashedPassword
         })
-        res.status(201).send({ message: 'User has been created', user })
+
+        res.status(201).send({ message: 'L\'utilisateur à été créé' })
     } catch (err) {
         res.status(500).send(err)
     }
@@ -23,11 +31,11 @@ exports.login = async (req, res) => {
         }})
 
         if (!user) {
-            return res.status(404).send({ error: "Can not find user with this email address !"})
+            return res.status(404).send({ error: "Utilisateur introuvable avec cette adresse email !"})
         }
         const isMatch = await bcrypt.compare(req.body.password, user.password)
         if (!isMatch) {
-            return res.status(401).send({ error: "Wrong password"})
+            return res.status(401).send({ error: "Mot de passe incorrecte !"})
         }
 
         const token = jwt.sign({ id: user.id}, 'SECRET_KEY', { expiresIn: '24h' })
@@ -50,8 +58,14 @@ exports.getProfile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
+        let hashedPassword;
+        if (req.body.password) {
+            hashedPassword = await bcrypt.hash(req.body.password, 8);
+        }
         await User.update({ 
-            ...req.body
+            username: req.body.username,
+            email: req.body.email,
+            password: hashedPassword
         }, {
             where: {
                 id: req.user.id
