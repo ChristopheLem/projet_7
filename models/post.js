@@ -21,6 +21,13 @@ Post.init({
   userId: {
       type: Sequelize.INTEGER,
       allowNull: false
+  },
+  avatar: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  imageUrl: {
+    type: Sequelize.STRING
   }
 }, {
   timestamps: true,

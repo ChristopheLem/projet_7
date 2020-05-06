@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Groupomédia </title>    
-    <meta name="description" content="Groupomania, réseau social pour les employés de l'entreprise du même nom.">
+    <title> Groupomédia réseau social d'entreprise</title>    
+    <meta name="description" content="Groupomania, découvert les posts favoris de vos collègues.">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e439166e98.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/style.css">
     <script src="js/connexion.js" async></script>
-    <script src="js/index.js" async></script>
+    <script src="js/post.js" async></script>
 </head>
 
 <body>
@@ -22,17 +22,9 @@
             </div> 
         </nav>
     </header>
-    <main id="index">
-        <form>
-            <div class="post-form">
-                <textarea id="story" rows="8" placeholder="Racontez nous votre histoire..."></textarea>
-                <input type="file" name="image">
-                <button type="submit" class="validbtn" id="btn">Publier</button>                
-            </div>
-            <div id="error-message"></div>
-        </form>
+    <main>
         <section id="post">
-            <h2>Fil d'actualité :</h2>
+            <h2>Votre post</h2>
         </section>
     </main>
 

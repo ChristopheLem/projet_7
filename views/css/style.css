@@ -12,11 +12,21 @@ html, body {
 a {
     text-decoration: none;
 }
-h1{
+h1, h2{
   padding: 16px;
+}
+h2 {
+  text-align: center;
 }
 a, p, div {
   background-color: inherit;
+}
+main {
+  margin: 10px;
+}
+#avatar {
+  width: 16px;
+  height: 16px;
 }
 /* HEADER */
 header {
@@ -42,12 +52,8 @@ header nav {
 header a{
   background-color: #fff;
 }
-/* MAIN */
-main {
-  margin: 10px;
-}
 /* FORM */
-input[type=text], input[type=password], input[type=email] {
+input[type=text], input[type=password], input[type=email], input[type=file] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -55,12 +61,9 @@ input[type=text], input[type=password], input[type=email] {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-
-/* Set a style for all buttons */
 div.btn {
   display: flex;
   justify-content: center;
-      
 }
 button {
   color: white;
@@ -71,11 +74,9 @@ button {
   cursor: pointer;
   width: 50%;
 }
-
 button:hover {
   opacity: 0.8;
 }
-
 .validbtn, .updatebtn {
     background-color: #4CAF50;  
     margin-right: 8px; 
@@ -93,18 +94,19 @@ button:hover {
 .container {
   padding: 16px;
 }
-
-#my-account .form-input {
+#signup img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+#image img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+#my-account #image {
   display: flex;
-  justify-content: space-between;
-}
-
-#my-account label {
-  padding-top: 16px;
-}
-
-#my-account input[type=text],#my-account input[type=password],#my-account input[type=email] {
-  width: 50%;
+  justify-content: flex-start;
 }
 /* INDEX */
 #index form {
@@ -128,7 +130,7 @@ font-size: 14px;
 #index textarea:focus {
 box-shadow: 3px 5px 5px #616161;
 }
-#index article {
+#index article, #post article {
   width: 300px;
   margin: 50px auto;
   border-radius: 5px;
@@ -137,27 +139,42 @@ box-shadow: 3px 5px 5px #616161;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   border: 1px solid rgb(169, 169, 169);
+  position: relative;
 }
-
-#index .username {
+.username {
   padding: 12px 16px 0;
   margin: 0 0 12px;
 }
-#index .content {
+.content {
   position: relative;
   min-height: 200px;
+  margin-bottom: 30px;
+  background-color: inherit;
+}
+.content img{
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
 }
 .fa-thumbs-up, .fa-thumbs-down {
   font-size: 20px;
 }
 .fa-thumbs-up {
   position: absolute;
-  bottom: 0;
+  bottom: -25px;
 }
 .fa-thumbs-down {
   position: absolute;
-  bottom: 0;
+  bottom: -25px;
   left: 25px;
+}
+.fa-times {
+  color: red;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
 }
 .like {
   color: green;
@@ -165,12 +182,48 @@ box-shadow: 3px 5px 5px #616161;
 .dislike {
   color: red;
 }
+/* POST */
+#post textarea {
+  resize: none;
+  width: 280px;
+  border-radius: 5px;
+  padding: 8px;
+  background-color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  }
 @media all and (min-width: 768px) {
+  h2 {
+    margin-right: 200px;
+  }
     header img{
       display: block;
       margin: 0 auto 20px auto;
       width: auto;
       background-color: #fff;
+  }
+  #my-account .form-input {
+    display: flex;
+    justify-content: space-between;
+  }
+  #my-account label {
+    padding-top: 16px;
+  }
+  #my-account input[type=text],
+  #my-account input[type=password],
+  #my-account input[type=email] {
+    width: 50%;
+  }
+  #my-account input[type=file] {
+    width: 50%;
+  }
+  #image img  {
+    width: 200px;
+    height: 200px;
+  }
+  #my-account #image {
+    display: flex;
+    justify-content: flex-end;
   }
   #index .post-form {
     width: 500px;

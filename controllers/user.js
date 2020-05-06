@@ -1,26 +1,30 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 exports.signup = async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 8);
+        const userObject = JSON.parse(req.body.user)
+        console.log(userObject.password)
+        const hashedPassword = await bcrypt.hash(userObject.password, 8);
 
-         const alreadyExist = await User.findOne({ where : {
-            email: req.body.email
+         const emailExist = await User.findOne({ where : {
+            email: userObject.email
         }})
-        if ( alreadyExist ) {
+        if ( emailExist ) {
             return res.status(401).send({ error: "Adresse email deja existante !"})
-        }      
-        await User.create({
-            username: req.body.username,
-            email: req.body.email,
-            password: hashedPassword
-        })
+        } 
 
+        await User.create({
+            username: userObject.username,
+            email: userObject.email,
+            password: hashedPassword,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        })
         res.status(201).send({ message: 'L\'utilisateur à été créé' })
     } catch (err) {
-        res.status(500).send(err)
+        res.status(500).send('Something went wrong')
     }
 }
 
@@ -58,14 +62,30 @@ exports.getProfile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        let hashedPassword;
-        if (req.body.password) {
-            hashedPassword = await bcrypt.hash(req.body.password, 8);
+        if (req.file) {
+            const user = await User.findOne({ where: {
+                id: req.user.id
+            }})
+            const filename = user.imageUrl.split('/images/')[1]
+            fs.unlink(`images/${filename}`, (err) => {
+                if (err) throw err;
+                console.log('Image has been deleted')
+            })
         }
+        
+        const userObject = req.file ? {
+            ...JSON.parse(req.body.user),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : {
+           ...JSON.parse(req.body.user) 
+        }
+        if (userObject.password > 7) {
+            userObject.password = await bcrypt.hash(userObject.password, 8);
+        }
+        console.log(userObject.password)
+
         await User.update({ 
-            username: req.body.username,
-            email: req.body.email,
-            password: hashedPassword
+            ...userObject
         }, {
             where: {
                 id: req.user.id
@@ -80,12 +100,15 @@ exports.updateProfile = async (req, res) => {
 
 exports.deleteProfile = async (req, res) => {
     try {
-        await User.destroy({ where: {
+        const user = await User.findOne({ where: {
             id: req.user.id
         }})
+        const filename = user.imageUrl.split('/images/')[1]
+        fs.unlink(`images/${filename}`, () => {
+            user.destroy()
+        })
         res.status(200).send({ message: 'deleted!'})
     } catch (err) {
         res.status(500).send(err)
     }
 }
-

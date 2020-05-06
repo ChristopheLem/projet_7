@@ -24,10 +24,17 @@ exports.getOnePost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
     try {
+        console.log(req.body.post, req.file)
+        const postObject = req.file ? {
+            ...JSON.parse(req.body.post),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...JSON.parse(req.body.post)}
+        console.log(postObject)
             await Post.create({ 
-            content: req.body.content,
-            userId: req.user.id,
-            username: req.user.username
+                ...postObject,
+                username: req.user.username,
+                avatar: req.user.imageUrl,
+                userId: req.user.id
              })
             
         res.status(201).send({ message: 'Post has been created'})

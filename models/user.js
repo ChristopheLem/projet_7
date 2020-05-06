@@ -12,6 +12,9 @@ User.init({
     autoIncrement: true,
     primaryKey: true
   },
+  imageUrl: {
+    type: Sequelize.STRING,
+  },
   username: {
     type: Sequelize.STRING,
     allowNull: false
