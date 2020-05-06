@@ -4,6 +4,7 @@ const urlPost = `http://localhost:4000/post/${postId}`
 const urlProfile = `http://localhost:4000/user/me`
 const token = 'Bearer ' + sessionStorage.getItem('token') // Récupère le token stocké dans local storage
 
+// GET POST
 // Permet d'afficher le post
 const displayPost = async () => {
     const userData = await getData(urlProfile)
@@ -81,7 +82,6 @@ const renderPost = (username, avatar, imageUrl, postContent, postDate, postUserI
                 <p class="date">${postDate}</p>
             </div>`
         }
-
     }
     section.appendChild(article)
 }
@@ -97,4 +97,82 @@ const convertDate = (date) => {
     const message = frDate + ', ' + hour
     return message
 }
-displayPost()
+
+window.addEventListener('load', async () => {
+    await displayPost()
+    // UPDATE POST
+    // Permet d'afficher l'image si nouveau fichier sélectionné
+    const fileField = document.querySelector('input[type=file]')
+    const content = document.querySelector('textarea')
+    const updateBtn = document.getElementById('btn')
+    const deleteBtn = document.querySelector('.fa-times')
+    function readUrl(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader()
+            reader.addEventListener('load', (e) => {
+                const img = document.querySelector('.content img')
+                img.src = e.target.result
+            })
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    fileField.addEventListener('change', function() {
+        readUrl(this)
+    }) 
+    // Modifie la ou les donnée(s) de l'utilisateur et envoie au serveur
+    const updateData = async (url, formData) => {
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': token
+                },
+                method: 'PUT',
+                body: formData
+            })
+            return await response.json();   
+            // return response     
+        } catch (err) {
+            throw new Error(err)
+        }
+    }
+    // Gestionnaire d'évènement créé sur clic du bouton 'Modifier'
+    updateBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        let post = { // Donnée de l'utilisateur
+            content: content.value
+        }
+        const formData = new FormData()
+        if (fileField.files[0]) {
+            formData.append('image', fileField.files[0])
+            formData.append('post', JSON.stringify(post))  
+        } else {
+            formData.append('post', JSON.stringify(post))  
+        }
+        
+        const data = await updateData(urlPost, formData) // Modifie la ou les donnée(s) de l'utilisateur et envoie au serveur
+        console.log(data.message)
+    }) 
+    // DELETE POST
+    const deleteProfile = async (url) => {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        })
+        return await response.json();
+    }
+    deleteBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await deleteProfile(urlPost);
+        window.location = 'index.html';
+    })      
+}) 
+
+
+
+
+
+

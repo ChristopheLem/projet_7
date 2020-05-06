@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const fs = require('fs')
 
 exports.getAllPosts = async (req, res) => {
     try {
@@ -47,12 +48,25 @@ exports.updatePost = async (req, res) => {
     try {
         const post = await Post.findOne({ where: {
             id: req.params.id
-        }})
+        }})        
+        if (req.file) {
+            const filename = post.imageUrl.split('/images/')[1]
+            fs.unlink(`images/${filename}`, (err) => {
+                if (err) throw err;
+                console.log('Image has been deleted')
+            })
+        }
+        const postObject = req.file ? {
+            ...JSON.parse(req.body.post),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : {
+           ...JSON.parse(req.body.post) 
+        }
         if (post && post.userId !== req.user.id) {
             return res.sendStatus(401);
         }
         await post.update({
-            ...req.body, id: req.params.id},
+            ...postObject, id: req.params.id},
         )
         res.status(200).send({ message: 'Post has been updated'})
     } catch (err) {
@@ -64,11 +78,21 @@ exports.deletePost = async (req, res) => {
     try {
         const post = await Post.findOne({ where: {
             id: req.params.id
-        }})
+        }})        
+        if (req.file) {
+            const filename = post.imageUrl.split('/images/')[1]
+            fs.unlink(`images/${filename}`, (err) => {
+                if (err) throw err;
+                console.log('Image has been deleted')
+            })
+        }
         if (post && post.userId !== req.user.id) {
             return res.sendStatus(401);
         }
-        await post.destroy()
+        console.log('everything is ok')
+        await Post.destroy({ where: {
+            id: req.params.id
+        }})
         res.status(200).send({ message: "Post has been deleted ! "})
     } catch (err) {
         res.status(500).send(err)

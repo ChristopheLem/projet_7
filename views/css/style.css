@@ -170,6 +170,7 @@ box-shadow: 3px 5px 5px #616161;
   left: 25px;
 }
 .fa-times {
+  display: block;
   color: red;
   position: absolute;
   top: 20px;

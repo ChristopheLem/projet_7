@@ -1,4 +1,4 @@
-const story = document.getElementById('story');
+const content = document.getElementById('content');
 const fileField = document.querySelector('input[type=file]')
 const btn = document.getElementById('btn');
 const errorMessage = document.getElementById('error-message');
@@ -24,14 +24,14 @@ const createData = async (url, formData) => {
 btn.addEventListener('click', async (e) => {
     try {
         e.preventDefault();
-        console.log(story.value)
-        if( story.value.length > 0) {
+        console.log(content.value)
+        if( content.value.length > 0) {
             const formData = new FormData();
-            const post = { content: story.value }
+            const post = { content: content.value }
             formData.append('post', JSON.stringify(post))
             if ( fileField.files[0]) formData.append('image', fileField.files[0])   
             const data = await createData(url, formData)
-            story.value = "";
+            content.value = "";
             window.location.reload(true)
             return console.log(data.message)
         }   
