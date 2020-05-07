@@ -1,4 +1,7 @@
 const User = require('../models/user');
+const Post = require('../models/post');
+const Like = require('../models/like');
+const Comment = require('../models/comment');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
@@ -107,6 +110,21 @@ exports.deleteProfile = async (req, res) => {
         fs.unlink(`images/${filename}`, () => {
             user.destroy()
         })
+        const posts = await Post.findAll({ where: {
+            userId: req.user.id
+        }})
+        posts.forEach(post => {
+            const postFilename = post.imageUrl.split('/images/')[1]
+            fs.unlink(`images/${postFilename}`, () => {
+                post.destroy()
+            })
+        })
+        await Like.destroy({ where: {
+            userIdLiked: req.user.id
+        }})
+        await Comment.destroy({ where: {
+            userId: req.user.id
+        }})
         res.status(200).send({ message: 'deleted!'})
     } catch (err) {
         res.status(500).send(err)

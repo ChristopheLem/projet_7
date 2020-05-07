@@ -7,7 +7,7 @@ exports.getPostLikes = async (req, res) => {
             userIdLiked: req.user.id
         }})
         if (!like) {
-            res.status(200).send({ message: 'Aimez vous ce post ?'})
+            return res.status(200).send({ message: 'Aimez vous ce post ?'})
         }
         res.status(200).send(like)
     } catch (err) {

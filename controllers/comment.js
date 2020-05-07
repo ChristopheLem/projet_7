@@ -31,6 +31,12 @@ exports.createComment = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
     try {
+        const comment = await Comment.findOne({ where: {
+            id: req.body.id
+        }})
+        if (!(req.user.id === comment.userId)) {
+            return res.status(401).send({ message: 'You are not authorised'})
+        }
         await Comment.destroy({ where: {
             userId: req.user.id,
             id: req.body.id

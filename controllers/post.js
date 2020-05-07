@@ -1,4 +1,6 @@
 const Post = require('../models/post');
+const Like = require('../models/like');
+const Comment = require('../models/comment');
 const fs = require('fs')
 
 exports.getAllPosts = async (req, res) => {
@@ -25,12 +27,10 @@ exports.getOnePost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
     try {
-        console.log(req.body.post, req.file)
         const postObject = req.file ? {
             ...JSON.parse(req.body.post),
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...JSON.parse(req.body.post)}
-        console.log(postObject)
             await Post.create({ 
                 ...postObject,
                 username: req.user.username,
@@ -92,6 +92,12 @@ exports.deletePost = async (req, res) => {
         }
         await Post.destroy({ where: {
             id: req.params.id
+        }})
+        await Like.destroy({ where: {
+            postId: req.params.id
+        }})
+        await Comment.destroy({ where: {
+            postId: req.params.id
         }})
         res.status(200).send({ message: "Post has been deleted ! "})
     } catch (err) {
