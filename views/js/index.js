@@ -5,6 +5,7 @@ const errorMessage = document.getElementById('error-message');
 
 const url = 'http://localhost:4000/post'
 const token = 'Bearer ' + sessionStorage.getItem('token') // Récupère le token stocké dans local storage
+// CREATE NEW POST
 // Crée les données du post 
 const createData = async (url, formData) => {
     try {
@@ -40,7 +41,7 @@ btn.addEventListener('click', async (e) => {
         throw new Error(err)
     }
 })
-
+// GET POSTS
 // Permet d'afficher les différents posts
 const urlPosts = 'http://localhost:4000/posts'
 const displayPosts = async () => {
@@ -51,7 +52,6 @@ const displayPosts = async () => {
         const postDate = convertDate(date) // Convertis la date en format français
         renderPost(username, avatar, imageUrl, content, postDate, id)
     }
-    likeOrDislike()
 }
 // Récupère les données des différents posts
 const getPosts = async (url) => {
@@ -78,10 +78,6 @@ const renderPost = (username, avatar, imageUrl, postContent, postDate, postId) =
             <p class="username"><img src="${avatar}" id="avatar">${username}</p>
             <div class="content">
                 <p>${postContent}</p>
-                <div>
-                    <i class="far fa-thumbs-up"></i>
-                    <i class="far fa-thumbs-down"></i>
-                </div>
             </div>
             <p class="date">${postDate}</p>
             <a href="post.html?${postId}"><b>Voir post...</b></a>
@@ -94,10 +90,6 @@ const renderPost = (username, avatar, imageUrl, postContent, postDate, postId) =
             <div class="content">
                 <p>${postContent}</p>
                 <img src="${imageUrl}">
-                <div>
-                    <i class="far fa-thumbs-up"></i>
-                    <i class="far fa-thumbs-down"></i>
-                </div>
             </div>
             <p class="date">${postDate}</p>
             <a href="post.html?${postId}"><b>Voir post...</b></a>
@@ -118,30 +110,6 @@ const convertDate = (date) => {
     frDate = frDate.join('-')
     const message = frDate + ', ' + hour
     return message
-}
-const likeOrDislike = () => {
-    const likes = document.querySelectorAll('.fa-thumbs-up')
-    const dislikes = document.querySelectorAll('.fa-thumbs-down')    
-    for(let i = 0; i < likes.length; i++) {
-        likes[i].addEventListener('click', () =>{
-            if(!likes[i].className.includes('like') && !dislikes[i].className.includes('dislike')) {
-                likes[i].value = 1;
-                likes[i].classList.add('like')       
-            } else {
-                likes[i].value = 0;
-                likes[i].classList.remove('like');                   
-            }
-        })
-        dislikes[i].addEventListener('click', () =>{
-            if(!dislikes[i].className.includes('dislike') && !likes[i].className.includes('like')) {
-                dislikes[i].value = 1;
-                dislikes[i].classList.add('dislike')       
-            } else {
-                dislikes[i].value = 0;
-                dislikes[i].classList.remove('dislike');                   
-            }
-        })   
-    }  
 }
 
 displayPosts()

@@ -157,17 +157,10 @@ box-shadow: 3px 5px 5px #616161;
   width: 150px;
   height: 150px;
 }
-.fa-thumbs-up, .fa-thumbs-down {
-  font-size: 20px;
-}
 .fa-thumbs-up {
+  font-size: 20px;  
   position: absolute;
   bottom: -25px;
-}
-.fa-thumbs-down {
-  position: absolute;
-  bottom: -25px;
-  left: 25px;
 }
 .fa-times {
   display: block;
@@ -179,9 +172,6 @@ box-shadow: 3px 5px 5px #616161;
 }
 .like {
   color: green;
-}
-.dislike {
-  color: red;
 }
 /* POST */
 #post textarea {

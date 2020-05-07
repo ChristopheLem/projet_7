@@ -78,8 +78,9 @@ exports.deletePost = async (req, res) => {
     try {
         const post = await Post.findOne({ where: {
             id: req.params.id
-        }})        
-        if (req.file) {
+        }})
+        
+        if (post.imageUrl) {
             const filename = post.imageUrl.split('/images/')[1]
             fs.unlink(`images/${filename}`, (err) => {
                 if (err) throw err;
@@ -89,7 +90,6 @@ exports.deletePost = async (req, res) => {
         if (post && post.userId !== req.user.id) {
             return res.sendStatus(401);
         }
-        console.log('everything is ok')
         await Post.destroy({ where: {
             id: req.params.id
         }})
@@ -99,13 +99,14 @@ exports.deletePost = async (req, res) => {
     }
 }
 
-exports.getAllUserPosts = async (req, res) => {
-    try {
-        const posts = await Post.findAll({ where: {
-            userId: req.user.id
-        }})
-        res.status(200).send(posts)
-    } catch (err) {
-        res.sendStatus(500)
-    }
-}
+// exports.getAllUserPosts = async (req, res) => {
+//     try {
+//         const posts = await Post.findAll({ where: {
+//             userId: req.user.id
+//         }})
+//         res.status(200).send(posts)
+//     } catch (err) {
+//         res.sendStatus(500)
+//     }
+// }
+
