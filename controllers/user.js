@@ -94,6 +94,16 @@ exports.updateProfile = async (req, res) => {
                 id: req.user.id
             }
         })
+        if (userObject.imageUrl) {
+            await Post.update({ 
+                avatar: userObject.imageUrl
+            }, {
+                where: {
+                    userId: req.user.id
+                }
+            })
+        }
+
         res.status(200).send({ message: 'Profile has been updated !'})
     } catch (err) {
         res.status(500).send(err)
